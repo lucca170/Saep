@@ -1,0 +1,56 @@
+{% extends "gestao_estoque/base.html" %}
+{% block title %}Gestão de Estoque{% endblock %}
+
+{% block content %}
+    <h2>Interface Gestão de Estoque (RF7)</h2>
+    
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>Produtos em Ordem Alfabética (RF7.1.1)</h3>
+            <p>Lista de produtos ordenados pelo nome:</p>
+            <ul>
+                {% for produto in produtos %}
+                    <li>**{{ produto.nome }}** (Estoque: {{ produto.estoque_atual }}) - Mínimo: {{ produto.estoque_minimo }}</li>
+                {% empty %}
+                    <li>Nenhum produto cadastrado.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h3>Registro de Movimentação (RF7.1.2, RF7.1.3)</h3>
+            <p>O registro da movimentação (Seleção de Produto/Tipo e Inserção de Data) é realizado na interface Admin:</p>
+            <p><a href="/admin/gestao_estoque/movimentacaoestoque/add/">➡️ Ir para Formulário de Movimentação (Admin)</a></p>
+        </div>
+    </div>
+    
+    <div class="card" style="margin-top: 20px;">
+        <h3>Últimas Movimentações (Visualização)</h3>
+        <table class="table-style">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Tipo</th>
+                    <th>Quantidade</th>
+                    <th>Data</th>
+                    <th>Usuário</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mov in movimentacoes %}
+                <tr>
+                    <td>{{ mov.produto.nome }}</td>
+                    <td>{{ mov.get_tipo_movimentacao_display }}</td>
+                    <td>{{ mov.quantidade }}</td>
+                    <td>{{ mov.data_movimentacao }}</td>
+                    <td>{{ mov.usuario.username|default:"N/A" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Nenhuma movimentação registrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "gestao_estoque/base.html" %}
+{% block title %}Interface Principal{% endblock %}
+
+{% block content %}
+    <h2>Interface Principal do Sistema</h2>
+    <p>Olá, **{{ user.get_full_name|default:user.username }}**! Seja bem-vindo ao Sistema de Gestão de Estoque (SAEP).</p>
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>Acesso Rápido</h3>
+            <p><a href="{% url 'cadastro_produto' %}">➡️ Acessar Cadastro de Produto (RF6)</a></p>
+            <p><a href="{% url 'gestao_estoque' %}">➡️ Acessar Gestão de Estoque (RF7)</a></p>
+        </div>
+        
+        <div class="card">
+            <h3>Visão Geral</h3>
+            <p>Este é o painel de controle do sistema de gestão de estoque.</p>
+            <p>Utilize os links do cabeçalho para navegar entre as interfaces de Cadastro e Gestão de Estoque.</p>
+        </div>
+    </div>
+{% endblock %}

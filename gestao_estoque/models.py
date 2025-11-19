@@ -23,9 +23,12 @@ class MovimentacaoEstoque(models.Model):
     ]
     
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE, verbose_name="Produto")
+    # RF7.1.2: Tipo de movimentação (Entrada/Saída)
     tipo_movimentacao = models.CharField(max_length=1, choices=TIPO_MOVIMENTACAO_CHOICES, verbose_name="Tipo")
     quantidade = models.IntegerField(verbose_name="Quantidade")
+    # RF7.1.3: Data da movimentação
     data_movimentacao = models.DateField(auto_now_add=True, verbose_name="Data da Movimentação")
+    # Usuário que realizou a movimentação
     usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Usuário")
 
     def __str__(self):
@@ -34,4 +37,5 @@ class MovimentacaoEstoque(models.Model):
     class Meta:
         verbose_name = "Movimentação de Estoque"
         verbose_name_plural = "Movimentações de Estoque"
+        # Ordenação para RF7.1.1 (ordenado pela data)
         ordering = ['-data_movimentacao']
