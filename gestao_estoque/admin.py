@@ -1,3 +1,5 @@
+# Arquivo: gestao_estoque/admin.py
+
 from django.contrib import admin
 from .models import Produto, MovimentacaoEstoque
 
@@ -6,7 +8,8 @@ class MovimentacaoEstoqueAdmin(admin.ModelAdmin):
     list_display = ('produto', 'tipo_movimentacao', 'quantidade', 'data_movimentacao', 'usuario')
     list_filter = ('tipo_movimentacao', 'produto')
     search_fields = ('produto__nome',)
-    readonly_fields = ('data_movimentacao',) 
+    # RF7.1.3 CORREÇÃO: 'data_movimentacao' foi removida para permitir inserção manual.
+    readonly_fields = () 
     
 # Customização do Produto
 class ProdutoAdmin(admin.ModelAdmin):

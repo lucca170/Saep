@@ -5,32 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAEP - {% block title %}{% endblock %}</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .header { background-color: #333; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .header a { color: white; text-decoration: none; margin-left: 20px; }
-        .container { padding: 20px; }
-        .nav-links a { margin-left: 15px; font-weight: bold; }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px; }
-        .card { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .table-style { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .table-style th, .table-style td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .table-style th { background-color: #f2f2f2; }
-        .form-container { max-width: 400px; margin: 50px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .message { padding: 10px; margin-bottom: 15px; border-radius: 5px; }
-        .error { background-color: #fdd; border: 1px solid #f00; color: #f00; }
+        /* Estilo feito às pressas / Mínimo */
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f0f0f0; /* Fundo simples */
+        }
+        .header { 
+            background-color: #336699; /* Azul padrão (simples) */
+            color: white; 
+            padding: 10px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-bottom: 2px solid #555; /* Borda grossa e simples */
+        }
+        .header a { 
+            color: #ccc; 
+            text-decoration: underline; 
+            margin-left: 10px;
+        }
+        .header a:hover {
+            color: white;
+        }
+        .container { 
+            padding: 20px; 
+        }
+        h2 { 
+            border-bottom: 1px dashed #aaa; /* Linha tracejada simples */
+            padding-bottom: 5px; 
+            margin-bottom: 15px; 
+            color: #000;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%; /* Não 100%, parece desorganizado */
+            margin: 10px 0;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+        }
+        th {
+            background-color: #ddd;
+        }
+        .message.error {
+            border: 3px solid red; /* Borda grossa e urgente */
+            background-color: #fdd;
+            padding: 8px;
+            font-weight: bold;
+        }
+        .form-container {
+            border: 1px solid #000;
+            padding: 15px;
+            max-width: 300px; /* Formulário estreito */
+            margin: 20px auto;
+            background-color: #fff;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>SAEP - Gestão de Estoque</h1>
+        <h1>Gestão de Estoque</h1>
         {% if user.is_authenticated %}
             <div class="nav-links">
-                <span>Bem-vindo, {{ user.username }}</span> <a href="{% url 'dashboard' %}">Principal</a>
-                <a href="{% url 'cadastro_produto' %}">Cadastro de Produto</a> <a href="{% url 'gestao_estoque' %}">Gestão de Estoque</a> <a href="{% url 'logout' %}">Sair</a> </div>
+                <span>Usuário: {{ user.username }}</span> 
+                <a href="{% url 'dashboard' %}">Principal</a>
+                <a href="{% url 'cadastro_produto' %}">Cadastro Produto</a> 
+                <a href="{% url 'gestao_estoque' %}">Gestão Estoque</a> 
+                <a href="{% url 'logout' %}">[Sair]</a> 
+            </div>
         {% endif %}
     </div>
 
     <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
         {% block content %}
         {% endblock %}
     </div>
